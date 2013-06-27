@@ -8,7 +8,11 @@ I've found it gives me an easy way out of the world of Rails (or your framework 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+For now, reference this pre-release gem in your Gemfile thus:
+
+    gem 'caser', github: 'simonrobson/caser', branch: 'rails4'
+
+After release you can... Add this line to your application's Gemfile:
 
     gem 'caser'
 
@@ -65,6 +69,7 @@ These use cases also support call-back style usage:
         on.failure {|action| ... code for failure case}
       end.process
     end
+
 
 ## Contributing
 

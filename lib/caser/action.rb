@@ -5,8 +5,8 @@ module Caser
     include Observable
 
     def initialize(*params)
-      @_success_cb = @_failure_cb = nil
-      yield self if block_given?
+      @_callbacks = nil
+      yield @_callbacks = Callbacks.new if block_given?
       after_initialize(*params)
     end
 
@@ -18,11 +18,11 @@ module Caser
     end
 
     def succeed!
-      @_success_cb.call(self) if @_success_cb
+      @_callbacks.on_success(self) if @_callbacks
     end
 
     def fail!
-      @_failure_cb.call(self) if @_failure_cb
+      @_callbacks.on_failure(self) if @_callbacks
     end
 
     def processed!
@@ -46,12 +46,5 @@ module Caser
       notify_observers(event)
     end
 
-    def success(&cb)
-      @_success_cb = cb
-    end
-
-    def failure(&cb)
-      @_failure_cb = cb
-    end
   end
 end
