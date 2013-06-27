@@ -2,9 +2,9 @@
 
 This gem is an extraction of a pattern that I've evolved in a few recent web apps to find a home for our business logic between the controller and the persistence layer.
 
-It's heavily inspired by the ideas in Hexagonal Architecture and Bob Martin's talks on structuring web applications. But it is very light and simple.
+It's somewhat inspired by the ideas in Hexagonal Architecture and Bob Martin's talks on structuring web applications. But it is very light and simple.
 
-I've found it gives me an easy way out of the world of Rails (or your framework of choice) and into pure application code for the common cases once CRUD moves beyond simple single model updates. As such it tends to make business logic easily testable in isolation and usable from scripts and the console.
+I've found it gives me an easy way out of the world of Rails (or your framework of choice) and into pure application code for many common cases once CRUD moves beyond simple single model updates. It tends to make business logic easily testable in isolation and usable from scripts and the console.
 
 ## Installation
 
