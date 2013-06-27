@@ -1,5 +1,8 @@
+require 'observer'
+
 module Caser
   class Action
+    include Observable
 
     def initialize(*params)
       after_initialize(*params)
@@ -34,6 +37,11 @@ module Caser
 
     def errors
       @_errors ||= []
+    end
+
+    def emit(event)
+      changed
+      notify_observers(event)
     end
   end
 end
