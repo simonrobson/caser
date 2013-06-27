@@ -57,6 +57,15 @@ Here is typical usage in a controller:
       end
     end
 
+These use cases also support call-back style usage:
+
+    def create
+      Api::CreateContact.new(current_user, params[:contact]) do |on
+        on.success {|action| ... code for success case}
+        on.failure {|action| ... code for failure case}
+      end.process
+    end
+
 ## Contributing
 
 1. Fork it

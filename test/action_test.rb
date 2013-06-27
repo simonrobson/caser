@@ -2,23 +2,22 @@ require 'minitest/autorun'
 require 'caser'
 
 describe Caser::Action do
-
-  describe 'A basic action' do
-    class BasicAction < Caser::Action
-      attr_accessor :will_fail
-      def after_initialize(will_fail = false)
-        @will_fail = will_fail
-      end
-      
-      def do_process
-        errors << "It failed" if will_fail?
-      end
-
-      def will_fail?
-        will_fail
-      end
+  class BasicAction < Caser::Action
+    attr_accessor :will_fail
+    def after_initialize(will_fail = false)
+      @will_fail = will_fail
     end
 
+    def do_process
+      errors << "It failed" if will_fail?
+    end
+
+    def will_fail?
+      will_fail
+    end
+  end
+
+  describe 'A basic action' do
     it 'results in success' do
       @action = BasicAction.new
       @action.process
@@ -38,6 +37,40 @@ describe Caser::Action do
     it 'gives access to errors in failure case' do
       @action = BasicAction.new(true).process
       @action.errors.length.must_equal 1
+    end
+  end
+
+  describe 'callback style' do
+    def setup
+      @bug = Minitest::Mock.new
+    end
+
+    it 'calls back on success' do
+      @bug.expect(:succeeded, true)
+      @action = BasicAction.new do |on|
+        on.success { @bug.succeeded }
+        on.failure { @bug.failed }
+      end
+      @action.process
+      @bug.verify
+    end
+
+    it 'passes the action instance to the callbacks' do
+      @passed_in = nil 
+      @action = BasicAction.new do |on|
+        on.success { |a| @passed_in = a }
+      end
+      @action.process
+      @passed_in.must_equal @action
+    end
+
+    it 'calls back on failure' do
+      @bug.expect(:failed, true)
+      BasicAction.new(true) do |on|
+        on.success { @bug.succeeded }
+        on.failure { @bug.failed }
+      end.process
+      @bug.verify
     end
   end
 
