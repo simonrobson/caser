@@ -8,11 +8,7 @@ I've found it gives me an easy way out of the world of Rails (or your framework 
 
 ## Installation
 
-For now, reference this pre-release gem in your Gemfile thus:
-
-    gem 'caser', github: 'simonrobson/caser', branch: 'rails4'
-
-After release you can... Add this line to your application's Gemfile:
+Add this line to your application's Gemfile:
 
     gem 'caser'
 
