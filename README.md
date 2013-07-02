@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-To create a basic use case, extend Caser::Action:
+To create a basic use case, extend Caser::Action and implement after_initialize (any arity you like) and do_process:
 
     class Api::CreateContact < Caser::Action
       attr_accessor :user, params
