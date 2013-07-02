@@ -39,7 +39,7 @@ To create a basic use case, extend Caser::Action:
       
       def valid?(params)
         unless :whatever
-          errors << 'No, we're not going to do that'
+          errors << "No, we're not going to do that"
           return false
         end
         true
@@ -60,7 +60,7 @@ Here is typical usage in a controller:
 These use cases also support call-back style usage:
 
     def create
-      Api::CreateContact.new(current_user, params[:contact]) do |on
+      Api::CreateContact.new(current_user, params[:contact]) do |on|
         on.success {|action| ... code for success case}
         on.failure {|action| ... code for failure case}
       end.process
