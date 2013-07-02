@@ -26,8 +26,8 @@ To create a basic use case, extend Caser::Action and implement after_initialize 
 
     class Api::CreateContact < Caser::Action
       attr_accessor :user, params
-      def after_initialize
-        @user, @params = current_user, params
+      def after_initialize(user, params)
+        @user, @params = user, params
       end
 
       def do_process
