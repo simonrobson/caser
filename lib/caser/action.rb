@@ -4,8 +4,10 @@ module Caser
   class Action
     include Observable
 
+    attr_reader :outcome
     def initialize(*params)
       @_callbacks = nil
+      @outcome = nil
       yield @_callbacks = Callbacks.new if block_given?
       after_initialize(*params)
     end
@@ -46,5 +48,8 @@ module Caser
       notify_observers(event)
     end
 
+    def set_outcome(outcome)
+      @outcome = outcome
+    end
   end
 end

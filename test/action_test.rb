@@ -3,13 +3,15 @@ require 'caser'
 
 describe Caser::Action do
   class BasicAction < Caser::Action
-    attr_accessor :will_fail
-    def after_initialize(will_fail = false)
+    attr_accessor :will_fail, :eventual_outcome
+    def after_initialize(will_fail = false, eventual_outcome = eventual_outcome)
       @will_fail = will_fail
+      @eventual_outcome = eventual_outcome
     end
 
     def do_process
       errors << "It failed" if will_fail?
+      set_outcome(eventual_outcome) if eventual_outcome
     end
 
     def will_fail?
@@ -37,6 +39,12 @@ describe Caser::Action do
     it 'gives access to errors in failure case' do
       @action = BasicAction.new(true).process
       @action.errors.length.must_equal 1
+    end
+
+    it 'provides an outcome accessor' do
+      @outcome = Object.new
+      @action = BasicAction.new(true, @outcome).process
+      @action.outcome.must_equal @outcome
     end
   end
 
